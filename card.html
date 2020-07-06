@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <canvas width="500" height="500" style="background: red;"></canvas>
+    </body>
+    <script>
+        const oCanvas = document.querySelector('canvas');
+
+        const ctx = oCanvas.getContext('2d');
+
+        let i = 1;
+        let shake = 1;
+        const init = setInterval(function(){
+            ctx.save();
+            ctx.clearRect(0,0,500,500);
+            ctx.fillRect(225,205+shake,50,90);
+            ctx.restore();
+            i++;
+            shake = shake*-1;
+            if(i>8){
+                clearInterval(init);
+                // for(let i=1;i<12;i++){
+                //     wash(30*i,40);
+                // }
+                wash(30,95);
+            }
+        },210)
+
+        let h = 1;
+
+        function wash(x,y){
+            
+        }
+
+        let j = 1;
+        function spread(){
+
+            const aSpread = setInterval(function(){
+                ctx.save();
+                ctx.translate(250,500);
+                ctx.rotate((-20+j*3.1)*Math.PI/180);
+                ctx.translate(-250,-500);
+                ctx.fillRect(j*38,340,50,90);
+                ctx.restore();
+                j++;
+                if(j==12){
+                    clearInterval(aSpread);
+                }
+            },40)
+        }
+    </script>
+</html>

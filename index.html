@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <style>
+            canvas{
+                border-radius: 50%;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas width="300" height="300"></canvas>
+    </body>
+    <script>
+        const oCanvas = document.querySelector('canvas');
+        const oGC = oCanvas.getContext('2d');
+        const oImg1 = new Image();
+        const oImg2 = new Image();
+        const oImg3 = new Image();
+        const oImg4 = new Image();
+        oImg1.src = './frame1.jpg';
+        oImg2.src = './frame2.jpg';
+        oImg3.src = './frame3.jpg';
+        oImg4.src = './frame4.jpg';
+        
+        let i = 0;
+        const anm = [oImg1,oImg2,oImg3,oImg4];
+
+        oImg1.onload = function(){
+            setInterval(function(){
+                draw();
+                i++;
+                i>3?i=0:'';
+            },100);
+
+            function draw(){
+                oGC.clearRect(0,0,300,300);
+                oGC.save();
+                oGC.drawImage(anm[i],0,0,300,300);
+                oGC.restore();
+            }
+        }
+
+        
+    </script>
+</html>
