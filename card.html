@@ -15,40 +15,156 @@
         const oCanvas = document.querySelector('canvas');
 
         const ctx = oCanvas.getContext('2d');
+        const oCard = new Image();
 
+        oCard.src = './card.png';
+        
         let i = 1;
         let shake = 1;
-        const init = setInterval(function(){
+        oCard.onload = function(){
+            const init = setInterval(function(){
             ctx.save();
             ctx.clearRect(0,0,500,500);
-            ctx.fillRect(225,205+shake,50,90);
+            ctx.drawImage(oCard,225,205+shake,50,90);
             ctx.restore();
             i++;
             shake = shake*-1;
             if(i>8){
                 clearInterval(init);
-                // for(let i=1;i<12;i++){
-                //     wash(30*i,40);
-                // }
-                wash(30,95);
+                // ctx.clearRect(0,0,500,500);
+                shiftToLeft();
+                // circleWash();
             }
         },210)
+        }
+        
+        let k = 1;
+        shiftX = 50;
+        function shiftToLeft(){
+            const aShiftToLeft = setInterval(function(){
+                ctx.save();
+                ctx.clearRect(0,0,500,500);
+                ctx.translate(250-shiftX,205);
+                ctx.drawImage(oCard,0,0,50,90);
+                ctx.restore();
+                k++;
+                shiftX+=10;
+                if(shiftX>230){
+                    clearInterval(aShiftToLeft);
+                    k = 1;
+                    shiftX = 50;
+                    ctx.clearRect(0,0,500,500);
+                    splashWash();
+                }
+                
+            },40)
+        }
+
+        let x = 0;
+        copyX = 500/12;
+        function splashWash(){
+            const aSplashWash = setInterval(function(){
+                ctx.save();
+                ctx.translate(10+(x*copyX),205);
+                ctx.drawImage(oCard,0,0,50,90);
+                ctx.restore();
+                x++;
+                if(x>10){
+                    clearInterval(aSplashWash);
+                    x = 0;
+                    splashWashClear();
+                }
+            },65)
+        }
+
+        function splashWashClear(){
+            const aSplashWashClear = setInterval(function(){
+                ctx.save();
+                ctx.translate(10+(x*copyX),205);
+                ctx.clearRect(0,0,50,90);
+                ctx.restore();
+                x++;
+                if(x>9){
+                    clearInterval(aSplashWashClear);
+                    shiftToMiddle();
+                }
+            },40)
+        }
+
+        function shiftToMiddle(){
+            const aShiftToMiddle = setInterval(function(){
+                ctx.save();
+                ctx.clearRect(0,0,500,500);
+                ctx.translate(440-shiftX,205);
+                ctx.drawImage(oCard,0,0,50,90);
+                ctx.restore();
+                k++;
+                shiftX+=10;
+                if(shiftX>215){
+                    clearInterval(aShiftToMiddle);
+                    circleWash();
+                }
+                
+            },25)
+        }
 
         let h = 1;
+        function circleWash(){
+            const aCircleWash = setInterval(function(){
+                ctx.save();
+                ctx.translate(250,200);
+                ctx.rotate(30*h*Math.PI/180)
+                ctx.drawImage(oCard,0,0,50,90);
+                ctx.restore();
+                h++;
+                if(h>12){
+                    clearInterval(aCircleWash);
+                    h = 1;
+                    circleWashClear();
+                }
+            },50)
+        }
 
-        function wash(x,y){
-            
+        function circleWashClear(){
+            const aCircleWashClear = setInterval(function(){
+                    ctx.save();
+                    ctx.translate(250,200);
+                    ctx.rotate(390-(30*h)*Math.PI/180)
+                    ctx.clearRect(0,0,50,92);
+                    ctx.restore();
+                    h++;
+                    if(h>12){
+                        clearInterval(aCircleWashClear);
+                        toReadyPlace1();
+                        ctx.drawImage(oCard,225,200,50,90);
+                    }
+            },20)
+        }
+
+        let shiftY = 20;
+        function toReadyPlace1(){
+            const aToReadyPlace1 = setInterval(function(){
+                ctx.save();
+                ctx.clearRect(0,0,500,500);
+                ctx.translate(225,205-shiftY);
+                ctx.drawImage(oCard,0,0,50,90);
+                ctx.restore();
+                shiftY+=10;
+                if(shiftY>145){
+                    clearInterval(aToReadyPlace1);
+                    spread();
+                }
+            },50)
         }
 
         let j = 1;
         function spread(){
-
             const aSpread = setInterval(function(){
                 ctx.save();
-                ctx.translate(250,500);
-                ctx.rotate((-20+j*3.1)*Math.PI/180);
-                ctx.translate(-250,-500);
-                ctx.fillRect(j*38,340,50,90);
+                ctx.translate(225,0);
+                ctx.rotate((20-j*3.1)*Math.PI/180);
+                ctx.translate(-250,0);
+                ctx.drawImage(oCard,j*42,50,50,90);
                 ctx.restore();
                 j++;
                 if(j==12){
